@@ -442,7 +442,6 @@
       <button class="cat-btn" data-cat="outdoor">Outdoor</button>
       <button class="cat-btn" data-cat="events">Events</button>
       <button class="cat-btn" data-cat="bts">BTS</button>
-      <button class="cat-btn" data-cat="videos">Videos</button>
     </div>
   </div>
 
@@ -588,7 +587,6 @@ const MEDIA = [
   { src: 'BRANDS/3109155C-05E4-4DF8-B02E-4120ADF73857.JPG', cat: 'brands', title: 'Brand Story I',   type: 'photo' },
   { src: 'BRANDS/8217771d-67bc-475c-8694-04bed675479f.JPG', cat: 'brands', title: 'Brand Story II',  type: 'photo' },
   { src: 'BRANDS/c1ad94af-2b2e-421a-a826-e715c463b2dc.JPG', cat: 'brands', title: 'Brand Story III', type: 'photo' },
-  { src: 'BRANDS/TimeLapse.MOV',        cat: 'videos', title: 'Brand Timelapse',    type: 'video', thumb: '' },
   // ACC Campaign
   { src: 'ACC Campaign/ Brochure.jpg',  cat: 'brands', title: 'ACC Brochure',       type: 'photo' },
   { src: 'ACC Campaign/ Hording .jpg',  cat: 'brands', title: 'ACC Hoarding',       type: 'photo' },
@@ -663,18 +661,6 @@ const MEDIA = [
   { src: 'BTS/IMG_7391 2.jpg',                            cat: 'bts', title: 'Production Moment II', type: 'photo' },
   { src: 'BTS/IMG_7987 2.jpg',                            cat: 'bts', title: 'Creative Process I',   type: 'photo' },
   { src: 'BTS/IMG_9590.jpg',                              cat: 'bts', title: 'Creative Process II',  type: 'photo' },
-  { src: 'BTS/IMG_6392 2.mov',   thumb: '', cat: 'bts', title: 'BTS Reel I',   type: 'video' },
-  { src: 'BTS/IMG_6878 2.MOV',   thumb: '', cat: 'bts', title: 'BTS Reel II',  type: 'video' },
-  { src: 'BTS/IMG_7024 2.MOV',   thumb: '', cat: 'bts', title: 'BTS Reel III', type: 'video' },
-
-  // ── VIDEOS ─────────────────────────────────────────────────────────────────
-  { src: 'VIDEOS /Larissa Bonesi.MP4',    thumb: '', cat: 'videos', title: 'Larissa Bonesi',    type: 'video' },
-  { src: 'VIDEOS /Cinematic.mp4',         thumb: '', cat: 'videos', title: 'Cinematic',         type: 'video' },
-  { src: 'VIDEOS /Marvel Edit.mp4',       thumb: '', cat: 'videos', title: 'Marvel Edit',       type: 'video' },
-  { src: 'VIDEOS /Song Launch Event.MP4', thumb: '', cat: 'videos', title: 'Song Launch Event', type: 'video' },
-  { src: 'VIDEOS /Stop Motion.mov',       thumb: '', cat: 'videos', title: 'Stop Motion',       type: 'video' },
-  { src: 'VIDEOS /Stopmotion..mp4',       thumb: '', cat: 'videos', title: 'Stop Motion II',    type: 'video' },
-  { src: 'BRANDS/TimeLapse.MOV',          thumb: '', cat: 'videos', title: 'Brand Timelapse',   type: 'video' },
 
 ];
 
@@ -731,20 +717,12 @@ function renderGallery(cat) {
   grid.innerHTML = '';
 
   if (cat === 'all') {
-    const cats = ['model','food','product','wedding','brands','outdoor','events','bts','videos'];
+    const cats = ['model','food','product','wedding','brands','outdoor','events','bts'];
     filteredItems = [];
     cats.forEach(c => {
-      if (c === 'videos') {
-        const videoItems = MEDIA.filter(m => m.cat === 'videos');
-        filteredItems.push(...videoItems.slice(0, 3));
-      } else {
-        const items = MEDIA.filter(m => m.cat === c && m.type === 'photo');
-        filteredItems.push(...items.slice(0, 3));
-      }
+      const items = MEDIA.filter(m => m.cat === c && m.type === 'photo');
+      filteredItems.push(...items.slice(0, 3));
     });
-  } else if (cat === 'videos') {
-    // Videos tab: show ALL videos from every folder
-    filteredItems = MEDIA.filter(m => m.type === 'video');
   } else {
     filteredItems = MEDIA.filter(m => m.cat === cat);
   }
