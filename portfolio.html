@@ -435,7 +435,6 @@
     <div class="cat-nav" id="cat-nav">
       <button class="cat-btn active" data-cat="all">All Work</button>
       <button class="cat-btn" data-cat="model">Model</button>
-      <button class="cat-btn" data-cat="food">Food</button>
       <button class="cat-btn" data-cat="product">Product</button>
       <button class="cat-btn" data-cat="wedding">Wedding</button>
       <button class="cat-btn" data-cat="brands">Brands</button>
@@ -717,7 +716,7 @@ function renderGallery(cat) {
   grid.innerHTML = '';
 
   if (cat === 'all') {
-    const cats = ['model','food','product','wedding','brands','outdoor','events','bts'];
+    const cats = ['model','product','wedding','brands','outdoor','events','bts'];
     filteredItems = [];
     cats.forEach(c => {
       const items = MEDIA.filter(m => m.cat === c && m.type === 'photo');
