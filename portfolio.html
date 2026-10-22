@@ -46,8 +46,41 @@
       border-radius: 40px; text-decoration: none; transition: background 0.2s;
     }
     .nav-cta:hover { background: #fff; }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: #e8e8e8; }
+    .nav-hamburger {
+      display: none; flex-direction: column; gap: 5px; cursor: pointer;
+      padding: 12px; margin-right: -12px;
+      min-width: 44px; min-height: 44px;
+      align-items: center; justify-content: center;
+    }
+    .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: #e8e8e8; transition: all 0.3s; }
+
+    /* Mobile dropdown menu */
+    .nav-mobile-menu {
+      display: none;
+      position: fixed; top: 72px; left: 0; right: 0; z-index: 99;
+      background: rgba(12,12,12,0.98);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 24px 28px 32px;
+      flex-direction: column; gap: 0;
+    }
+    .nav-mobile-menu.open { display: flex; }
+    .nav-mobile-menu a {
+      font-size: 18px; font-weight: 500; letter-spacing: 0.06em;
+      color: #aaa; text-decoration: none;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
+    }
+    .nav-mobile-menu a:last-child { border-bottom: none; }
+    .nav-mobile-menu a:hover { color: #fff; }
+    .nav-mobile-menu .mobile-cta {
+      margin-top: 20px;
+      display: block; text-align: center;
+      background: #e8e8e8; color: #0c0c0c;
+      padding: 14px; border-radius: 40px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+    }
 
     /* ── HERO ─────────────────────────────────────────────────────────────── */
     .hero {
@@ -390,10 +423,18 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Book a Shoot</a>
-  <div class="nav-hamburger" id="hamburger">
+  <div class="nav-hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0">
     <span></span><span></span><span></span>
   </div>
 </nav>
+
+<!-- Mobile menu -->
+<div class="nav-mobile-menu" id="mobile-menu">
+  <a href="#portfolio" class="mobile-nav-link">Portfolio</a>
+  <a href="about.html" class="mobile-nav-link">About</a>
+  <a href="#contact" class="mobile-nav-link">Contact</a>
+  <a href="#contact" class="mobile-cta mobile-nav-link">Book a Shoot</a>
+</div>
 
 <!-- ── HERO ────────────────────────────────────────────────────────────────── -->
 <section class="hero">
@@ -868,6 +909,38 @@ lightbox.addEventListener('touchend', e => {
     showItem(lbIndex);
   }
   isSwiping = false;
+});
+
+// ─── HAMBURGER MENU ───────────────────────────────────────────────────────────
+const hamburger   = document.getElementById('hamburger');
+const mobileMenu  = document.getElementById('mobile-menu');
+const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+function toggleMenu() {
+  const isOpen = mobileMenu.classList.toggle('open');
+  // animate hamburger to X
+  const spans = hamburger.querySelectorAll('span');
+  if (isOpen) {
+    spans[0].style.cssText = 'transform: translateY(6.5px) rotate(45deg)';
+    spans[1].style.cssText = 'opacity: 0';
+    spans[2].style.cssText = 'transform: translateY(-6.5px) rotate(-45deg)';
+    document.body.style.overflow = 'hidden';
+  } else {
+    spans.forEach(s => s.style.cssText = '');
+    document.body.style.overflow = '';
+  }
+}
+
+hamburger.addEventListener('click', toggleMenu);
+hamburger.addEventListener('touchend', e => { e.preventDefault(); toggleMenu(); });
+
+// close menu when any link is tapped
+mobileLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.querySelectorAll('span').forEach(s => s.style.cssText = '');
+    document.body.style.overflow = '';
+  });
 });
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
